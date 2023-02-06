@@ -1,3 +1,31 @@
+.main {
+  max-width: 107rem;
+  background-color: #fcfcfc;
+}
+
+.header {
+  max-width: 107rem;
+  height: 7.125rem;
+  margin: 0 0 4.375rem;
+  padding: 2.75rem 67.625rem 2.625rem 9.375rem;
+  box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+  background-image: linear-gradient(to bottom, #ececec -32%, #fff 124%);
+}
+
+img.HACKER-NEWS {
+  width: 13rem;
+  height: 1.75rem;
+  object-fit: contain;
+  font-family: Baskerville;
+  font-size: 1.75rem;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #3b3b3b;
+}
+
 .dropdown {
     width: 15rem;
     height: 2rem;
@@ -57,9 +85,7 @@
     object-fit: contain;
   }
 
-  .container {
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
+  .maincontainer {
     width: 100%;
     padding-right: calc(var(--bs-gutter-x) * .5);
     padding-left: calc(var(--bs-gutter-x) * .5);
@@ -67,7 +93,7 @@
     margin-left: auto;
   }
 
-  .row {
+  .datarow {
     display: flex;
     flex-wrap: wrap;
     margin-top: calc(-1 * var(--bs-gutter-y));
@@ -147,4 +173,20 @@
     border-radius: 6px;
     border: solid 1px #606060;
     background-color: #606060;
+  }
+
+  .center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .paginationContainer {
+    height: 100%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    position: relative;
   }

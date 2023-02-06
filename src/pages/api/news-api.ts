@@ -10,6 +10,8 @@ export const getStories = (
   newsFavorited: number[]
 ) => {
   const [response, setResponse] = useState<snippetNews[]>([]);
+  const [numberPages, setNumberPages] = useState<number>(0);
+  const [totalRecords, setTotalRecords] = useState<number>(0);
   const [error, setError] = useState<AxiosError>();
 
   const setNewsFavorited =
@@ -17,24 +19,20 @@ export const getStories = (
       ? new Set(newsFavorited)
       : undefined;
 
-  //let response: snippetNews[];
-
   const fetchData = async () => {
     await axios
       .get(`${baseUrl}query=${language}&page=${page}`)
       .then(function (response) {
-        console.log("#response16 ", response);
         setResponse(newsValues(response.data.hits, setNewsFavorited));
+        setNumberPages(response.data.nbPages);
+        setTotalRecords(response.data.nbHits);
       })
       .catch(function (error) {
-        console.log(error);
         setError(error);
       });
   };
-  //fetchData();
-  //console.log("response25", response);
   useMemo(() => {
     fetchData();
   }, [language, page]);
-  return response;
+  return { response, numberPages, totalRecords };
 };

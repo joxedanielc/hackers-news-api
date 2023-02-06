@@ -1,5 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 
+export enum Variables_Stored {
+  newsFavorited = "news_favorited",
+  codeLanguageSelected = "code_language_selected",
+}
+
 export interface selectOptions {
   name: string;
   value?: string;
@@ -15,25 +20,26 @@ export interface snippetNews {
   favorited: boolean;
 }
 
+const verifyProperty = (value: string): boolean => {
+  const unwantedValues = new Set([" ", null, "null"]);
+
+  return unwantedValues.has(value);
+};
+
 export const newsValues = (
   data: any[],
   setNewsFavorited?: Set<number>
 ): snippetNews[] => {
-  //console.log("data", data);
   const newsFiltered: any[] = data.filter((news) => {
     return (
       news.story_id &&
-      news.story_id !== null &&
-      news.story_id !== "null" &&
+      !verifyProperty(news.story_id) &&
       news.story_title &&
-      news.story_title !== null &&
-      news.story_title !== "null" &&
+      !verifyProperty(news.story_title) &&
       news.author &&
-      news.author !== null &&
-      news.author !== "null" &&
+      !verifyProperty(news.author) &&
       news.created_at &&
-      news.created_at !== null &&
-      news.created_at !== "null"
+      !verifyProperty(news.created_at)
     );
   });
 
@@ -49,7 +55,7 @@ export const newsValues = (
 
 const isBrowser = () => typeof window !== "undefined";
 
-export const getSessionStorage = (key: string) => {
+const getSessionStorage = (key: string) => {
   if (isBrowser()) {
     const data = window.sessionStorage.getItem(key);
     if (data) {
@@ -57,10 +63,10 @@ export const getSessionStorage = (key: string) => {
         const parsed = JSON.parse(data);
         return parsed;
       } catch {
-        return {};
+        return null;
       }
     }
-    return {};
+    return null;
   }
 };
 
@@ -71,7 +77,16 @@ export const saveSessionStorage = (key: string, value: any) => {
 };
 
 export const getFavorites = (): number[] => {
-  const newsFavorited = getSessionStorage("news_favorited");
+  const newsFavorited = getSessionStorage(Variables_Stored.newsFavorited);
 
   return newsFavorited;
+};
+
+export const getLanguageCodeSelected = (): string => {
+  let codeLanguage = getSessionStorage(Variables_Stored.codeLanguageSelected);
+  if (!codeLanguage) {
+    codeLanguage = "angular";
+  }
+
+  return codeLanguage;
 };

@@ -1,6 +1,7 @@
 import * as React from "react";
 import styles from "@/styles/Styles.module.css";
 import { FunctionComponent } from "react";
+import parse from "html-react-parser";
 
 interface Props {
   timePosted: string;
@@ -15,7 +16,6 @@ const NewsCard: FunctionComponent<Props> = ({
   title,
   newsCardId,
 }) => {
-  console.log({ newsCardId });
   return (
     <div className={styles.informationCard} key={newsCardId}>
       <div className={styles.snippet}>

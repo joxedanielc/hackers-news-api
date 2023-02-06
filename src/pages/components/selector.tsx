@@ -1,15 +1,15 @@
 import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import { selectOptions } from "src/utils";
 import styles from "@/styles/Styles.module.css";
+import { FunctionComponent } from "react";
 
-export default function SelectLanguages() {
-  const [age, setAge] = React.useState("");
-  const [page, setPage] = React.useState(0);
-
+const SelectLanguages: FunctionComponent<{
+  onCodeLanguageChange: (codeLanguage: string) => void;
+  value: string;
+}> = ({ onCodeLanguageChange, value }) => {
   const codeLanguageOptions: selectOptions[] = [
     {
       name: "Angular",
@@ -25,16 +25,14 @@ export default function SelectLanguages() {
     },
   ];
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
-  };
-
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <Select
-          value={age}
-          onChange={handleChange}
+          value={value}
+          onChange={(event) => {
+            onCodeLanguageChange(event.target.value as string);
+          }}
           displayEmpty
           className={styles.dropdown}
         >
@@ -51,4 +49,6 @@ export default function SelectLanguages() {
       </FormControl>
     </div>
   );
-}
+};
+
+export default SelectLanguages;
