@@ -1,8 +1,19 @@
 import { Dispatch, SetStateAction } from "react";
 
-export enum Variables_Stored {
+export enum VariablesStored {
   newsFavorited = "news_favorited",
   codeLanguageSelected = "code_language_selected",
+}
+
+export enum PageView {
+  all = "all",
+  myFaves = "myFaves",
+}
+
+export enum CodeLanguageEnum {
+  angular = "Angular",
+  reactjs = "Reactjs",
+  vuesjs = "Vuesjs",
 }
 
 export interface selectOptions {
@@ -76,16 +87,16 @@ export const saveSessionStorage = (key: string, value: any) => {
   }
 };
 
-export const getFavorites = (): number[] => {
-  const newsFavorited = getSessionStorage(Variables_Stored.newsFavorited);
+export const getFavorites = (): snippetNews[] => {
+  const newsFavorited = getSessionStorage(VariablesStored.newsFavorited);
 
   return newsFavorited;
 };
 
 export const getLanguageCodeSelected = (): string => {
-  let codeLanguage = getSessionStorage(Variables_Stored.codeLanguageSelected);
+  let codeLanguage = getSessionStorage(VariablesStored.codeLanguageSelected);
   if (!codeLanguage) {
-    codeLanguage = "angular";
+    codeLanguage = CodeLanguageEnum.angular.toLowerCase();
   }
 
   return codeLanguage;

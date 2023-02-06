@@ -9,7 +9,8 @@ import {
   getLanguageCodeSelected,
   saveSessionStorage,
   getFavorites,
-  Variables_Stored,
+  VariablesStored,
+  PageView,
 } from "src/utils";
 import { getStories } from "src/pages/api/news-api";
 import usePagination from "src/pages/components/pagination";
@@ -21,19 +22,21 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const [codeLanguage, setCodeLanguage] = useState(getLanguageCodeSelected());
   const [page, setPage] = useState(0);
+  const [pageView, setPageView] = useState(PageView.all);
+  const perPage = 20;
 
   const { response, numberPages, totalRecords } = getStories(
     codeLanguage,
     page,
-    getFavorites()
+    getFavorites(),
+    pageView,
+    perPage
   );
 
-  const PER_PAGE = 20;
-
-  const count = Math.ceil(totalRecords / PER_PAGE);
+  const count = Math.ceil(totalRecords / perPage);
   const dataPerPagination = usePagination(
     response,
-    PER_PAGE,
+    perPage,
     numberPages,
     totalRecords
   );
@@ -43,9 +46,15 @@ export default function Home() {
     dataPerPagination.jump(p);
   };
 
+  const handleChangePageView = (e: any, pView: string) => {
+    const view = pView === PageView.all ? PageView.all : PageView.myFaves;
+    setPageView(view);
+    e.preventDefault();
+  };
+
   const handleCodeLanguageChange = (codeLanguage: string): void => {
     setCodeLanguage(codeLanguage);
-    saveSessionStorage(Variables_Stored.codeLanguageSelected, codeLanguage);
+    saveSessionStorage(VariablesStored.codeLanguageSelected, codeLanguage);
   };
 
   return (
@@ -63,25 +72,61 @@ export default function Home() {
         <div className={styles.header}>
           <span className="HACKER-NEWS Text-Style">HACKER NEWS</span>
         </div>
-        <div className={styles.maincontainer}>
+        <div className={styles.paginationContainer}>
+          <div className={styles.center}>
+            <div className={styles.datarow}>
+              <div
+                className={clsx(styles.rectangle, {
+                  [styles.rectangleSelected]: pageView === PageView.all,
+                })}
+              >
+                <button
+                  onClick={(e) => {
+                    handleChangePageView(e, PageView.all);
+                  }}
+                >
+                  <span>All</span>
+                </button>
+              </div>
+              <div
+                className={clsx(styles.rectangle, {
+                  [styles.rectangleSelected]: pageView === PageView.myFaves,
+                })}
+              >
+                <button
+                  onClick={(e) => {
+                    handleChangePageView(e, PageView.myFaves);
+                  }}
+                >
+                  <span>My Faves</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {pageView === PageView.all && (
           <SelectLanguages
             onCodeLanguageChange={handleCodeLanguageChange}
             value={codeLanguage}
           ></SelectLanguages>
-          <NewsCardList data={response} isFavorited={false}></NewsCardList>
-          <div className={styles.paginationContainer}>
-            <div className={styles.center}>
-              <Pagination
-                count={count}
-                size="large"
-                page={page}
-                variant="outlined"
-                shape="rounded"
-                onChange={handleChange}
-              />
+        )}
+        {response.length > 0 && (
+          <div className={styles.maincontainer}>
+            <NewsCardList data={response} isFavorited={false}></NewsCardList>
+            <div className={styles.paginationContainer}>
+              <div className={styles.center}>
+                <Pagination
+                  count={count}
+                  size="large"
+                  page={page}
+                  variant="outlined"
+                  shape="rounded"
+                  onChange={handleChange}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
     </>
   );

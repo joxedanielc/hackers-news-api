@@ -13,16 +13,12 @@ const NewsCardList: FunctionComponent<Props> = ({ data, isFavorited }) => {
   return (
     <div className={styles.datarow}>
       {data.map((news, index) => {
-        if (isFavorited === news.favorited) {
-          return (
-            <NewsCard
-              timePosted={news.created_at}
-              author={news.author}
-              title={news.story_title}
-              newsCardId={`${news.story_id}-${index.toString()}`}
-            />
-          );
-        }
+        return (
+          <NewsCard
+            news={news}
+            newsCardId={`${news.story_id}-${index.toString()}`}
+          />
+        );
       })}
     </div>
   );

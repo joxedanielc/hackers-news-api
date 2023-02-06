@@ -2,7 +2,7 @@ import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { selectOptions } from "src/utils";
+import { selectOptions, CodeLanguageEnum } from "src/utils";
 import styles from "@/styles/Styles.module.css";
 import { FunctionComponent } from "react";
 
@@ -12,16 +12,16 @@ const SelectLanguages: FunctionComponent<{
 }> = ({ onCodeLanguageChange, value }) => {
   const codeLanguageOptions: selectOptions[] = [
     {
-      name: "Angular",
-      icon: "/angular.png",
+      name: CodeLanguageEnum.angular,
+      icon: `/${CodeLanguageEnum.angular.toLowerCase()}.png`,
     },
     {
-      name: "Reacts",
-      icon: "/reactjs.png",
+      name: CodeLanguageEnum.reactjs,
+      icon: `/${CodeLanguageEnum.reactjs.toLowerCase()}.png`,
     },
     {
-      name: "Vuesjs",
-      icon: "/vuesjs.png",
+      name: CodeLanguageEnum.vuesjs,
+      icon: `/${CodeLanguageEnum.vuesjs.toLowerCase()}.png`,
     },
   ];
 

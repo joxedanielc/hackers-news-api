@@ -1,13 +1,15 @@
 import axios, { AxiosError } from "axios";
-import { useEffect, useMemo, useState } from "react";
-import { snippetNews, newsValues } from "src/utils";
+import { useMemo, useState } from "react";
+import { snippetNews, newsValues, PageView } from "src/utils";
 
 export const baseUrl = "https://hn.algolia.com/api/v1/search_by_date?";
 
 export const getStories = (
   language: string,
   page: number,
-  newsFavorited: number[]
+  newsFavorited: snippetNews[],
+  pageView: PageView,
+  perPage: number
 ) => {
   const [response, setResponse] = useState<snippetNews[]>([]);
   const [numberPages, setNumberPages] = useState<number>(0);
@@ -16,7 +18,7 @@ export const getStories = (
 
   const setNewsFavorited =
     newsFavorited && newsFavorited.length > 0
-      ? new Set(newsFavorited)
+      ? new Set(newsFavorited.map((x) => x.story_id))
       : undefined;
 
   const fetchData = async () => {
@@ -31,8 +33,20 @@ export const getStories = (
         setError(error);
       });
   };
+
   useMemo(() => {
-    fetchData();
-  }, [language, page]);
+    if (pageView === PageView.all) {
+      fetchData();
+    } else {
+      if (newsFavorited !== null) {
+        const maxPage = Math.ceil(newsFavorited.length / perPage);
+        setNumberPages(maxPage);
+        setTotalRecords(newsFavorited.length);
+        setResponse(newsFavorited);
+      } else {
+        setResponse([]);
+      }
+    }
+  }, [language, page, pageView]);
   return { response, numberPages, totalRecords };
 };
