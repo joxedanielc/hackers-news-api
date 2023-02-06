@@ -7,7 +7,10 @@ export const baseUrl = "https://hn.algolia.com/api/v1/search_by_date?";
 export const getStories = (
   language: string,
   page: number,
-  newsFavorited: snippetNews[],
+  news: {
+    newsFavorited: snippetNews[];
+    newsFavoritedIds: Set<number> | undefined;
+  },
   pageView: PageView,
   perPage: number
 ) => {
@@ -15,17 +18,18 @@ export const getStories = (
   const [numberPages, setNumberPages] = useState<number>(0);
   const [totalRecords, setTotalRecords] = useState<number>(0);
   const [error, setError] = useState<AxiosError>();
+  const [updatedNewsFavorited, setUpdatedNewsFavorited] =
+    useState<snippetNews[]>();
 
-  const setNewsFavorited =
-    newsFavorited && newsFavorited.length > 0
-      ? new Set(newsFavorited.map((x) => x.story_id))
-      : undefined;
+  const updateNewsFavorite = (news: snippetNews[]) => {
+    setUpdatedNewsFavorited(news);
+  };
 
   const fetchData = async () => {
     await axios
       .get(`${baseUrl}query=${language}&page=${page}`)
       .then(function (response) {
-        setResponse(newsValues(response.data.hits, setNewsFavorited));
+        setResponse(newsValues(response.data.hits, news.newsFavoritedIds));
         setNumberPages(response.data.nbPages);
         setTotalRecords(response.data.nbHits);
       })
@@ -38,15 +42,15 @@ export const getStories = (
     if (pageView === PageView.all) {
       fetchData();
     } else {
-      if (newsFavorited !== null) {
-        const maxPage = Math.ceil(newsFavorited.length / perPage);
+      if (news !== null) {
+        const maxPage = Math.ceil(news.newsFavorited.length / perPage);
         setNumberPages(maxPage);
-        setTotalRecords(newsFavorited.length);
-        setResponse(newsFavorited);
+        setTotalRecords(news.newsFavorited.length);
+        setResponse(news.newsFavorited);
       } else {
         setResponse([]);
       }
     }
-  }, [language, page, pageView]);
-  return { response, numberPages, totalRecords };
+  }, [language, page, pageView, updatedNewsFavorited]);
+  return { response, numberPages, totalRecords, updateNewsFavorite };
 };

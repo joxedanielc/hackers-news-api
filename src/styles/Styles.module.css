@@ -68,6 +68,10 @@ img.HACKER-NEWS {
     background-color: #fff;
   }
 
+  .informationCard:hover {
+    opacity: 0.5;
+  }
+
   .favoritesection {
     width: 4.25rem;
     height: 5.625rem;
@@ -228,3 +232,9 @@ img.HACKER-NEWS {
     text-align: center;
     color: var(--azure);
   }
+
+  .like {
+    content: "\2661";
+    font-size: "28px";
+    font-weight: "500"
+}

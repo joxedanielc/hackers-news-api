@@ -10,23 +10,36 @@ import {
 
 interface Props {
   news: snippetNews;
-  newsCardId: string;
+  updateNewsFavorite: (news: snippetNews[]) => void;
 }
 
-const NewsCard: FunctionComponent<Props> = ({ news, newsCardId }) => {
-  const saveFavoritedNews = (news: snippetNews) => {
-    let savedNews = getFavorites();
-    let newsFavorited = savedNews == null ? [] : savedNews;
-    if (newsFavorited.length > 0) {
+const NewsCard: FunctionComponent<Props> = ({ news, updateNewsFavorite }) => {
+  const handleFavoritedNews = (news: snippetNews) => {
+    let getNews = getFavorites();
+    let newsFavorited =
+      getNews.newsFavorited == null ? [] : getNews.newsFavorited;
+
+    if (!newsFavorited.find((x) => x.story_id === news.story_id)) {
+      newsFavorited.push({ ...news, favorited: true });
+    } else {
       newsFavorited = newsFavorited.filter((x) => x.story_id !== news.story_id);
     }
-    newsFavorited.push({ ...news, favorited: true });
     saveSessionStorage(VariablesStored.newsFavorited, newsFavorited);
+    updateNewsFavorite(newsFavorited);
+  };
+
+  const handdleNewsOnClick = (url: string) => {
+    window.open(url, "_blank");
   };
 
   return (
-    <div className={styles.informationCard} key={newsCardId}>
-      <div className={styles.snippet}>
+    <div className={styles.informationCard}>
+      <div
+        className={styles.snippet}
+        onClick={() => {
+          handdleNewsOnClick(news.story_url);
+        }}
+      >
         <div className={styles.row}>
           <div className={styles.col12}>
             <span className={styles.postedTime}>
@@ -44,7 +57,7 @@ const NewsCard: FunctionComponent<Props> = ({ news, newsCardId }) => {
       <div className={styles.favorited}>
         <button
           onClick={() => {
-            saveFavoritedNews(news);
+            handleFavoritedNews(news);
           }}
         >
           {news.favorited ? (

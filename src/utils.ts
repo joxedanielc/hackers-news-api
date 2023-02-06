@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import moment, { now } from "moment";
 
 export enum VariablesStored {
   newsFavorited = "news_favorited",
@@ -37,6 +37,14 @@ const verifyProperty = (value: string): boolean => {
   return unwantedValues.has(value);
 };
 
+const getTimeDifference = (created_at: string): string => {
+  let start = moment(created_at, "YYYY-MM-DDTHH:mm:ss.SSSSZ");
+  let now = moment();
+  let end = moment(now, "YYYY-MM-DDTHH:mm:ss.SSSSZ");
+  const diff = end.diff(start, "h");
+  return diff.toString();
+};
+
 export const newsValues = (
   data: any[],
   setNewsFavorited?: Set<number>
@@ -50,16 +58,18 @@ export const newsValues = (
       news.author &&
       !verifyProperty(news.author) &&
       news.created_at &&
-      !verifyProperty(news.created_at)
+      !verifyProperty(news.created_at) &&
+      news.story_url &&
+      !verifyProperty(news.story_url)
     );
   });
 
   return newsFiltered.map((news) => ({
     story_id: news.story_id,
     story_title: news.story_title,
-    story_url: news.story_id,
+    story_url: news.story_url,
     author: news.author,
-    created_at: news.created_at,
+    created_at: `${getTimeDifference(news.created_at)} hour(s) ago`,
     favorited: setNewsFavorited ? setNewsFavorited.has(news.story_id) : false,
   }));
 };
@@ -87,10 +97,15 @@ export const saveSessionStorage = (key: string, value: any) => {
   }
 };
 
-export const getFavorites = (): snippetNews[] => {
-  const newsFavorited = getSessionStorage(VariablesStored.newsFavorited);
-
-  return newsFavorited;
+export const getFavorites = () => {
+  const newsFavorited = getSessionStorage(
+    VariablesStored.newsFavorited
+  ) as snippetNews[];
+  const newsFavoritedIds =
+    newsFavorited && newsFavorited.length > 0
+      ? new Set(newsFavorited.map((x) => x.story_id))
+      : undefined;
+  return { newsFavorited, newsFavoritedIds };
 };
 
 export const getLanguageCodeSelected = (): string => {

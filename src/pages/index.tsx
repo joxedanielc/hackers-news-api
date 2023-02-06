@@ -11,6 +11,7 @@ import {
   getFavorites,
   VariablesStored,
   PageView,
+  snippetNews,
 } from "src/utils";
 import { getStories } from "src/pages/api/news-api";
 import usePagination from "src/pages/components/pagination";
@@ -23,26 +24,17 @@ export default function Home() {
   const [codeLanguage, setCodeLanguage] = useState(getLanguageCodeSelected());
   const [page, setPage] = useState(0);
   const [pageView, setPageView] = useState(PageView.all);
+
   const perPage = 20;
 
-  const { response, numberPages, totalRecords } = getStories(
-    codeLanguage,
-    page,
-    getFavorites(),
-    pageView,
-    perPage
-  );
+  const { response, numberPages, totalRecords, updateNewsFavorite } =
+    getStories(codeLanguage, page, getFavorites(), pageView, perPage);
 
   const count = Math.ceil(totalRecords / perPage);
-  const dataPerPagination = usePagination(
-    response,
-    perPage,
-    numberPages,
-    totalRecords
-  );
+  const dataPerPagination = usePagination(perPage, numberPages);
 
   const handleChange = (e: any, p: number) => {
-    setPage(p);
+    setPage(p - 1);
     dataPerPagination.jump(p);
   };
 
@@ -112,13 +104,16 @@ export default function Home() {
         )}
         {response.length > 0 && (
           <div className={styles.maincontainer}>
-            <NewsCardList data={response} isFavorited={false}></NewsCardList>
+            <NewsCardList
+              data={response}
+              updateNewsFavorite={updateNewsFavorite}
+            ></NewsCardList>
             <div className={styles.paginationContainer}>
               <div className={styles.center}>
                 <Pagination
                   count={count}
                   size="large"
-                  page={page}
+                  page={page + 1}
                   variant="outlined"
                   shape="rounded"
                   onChange={handleChange}

@@ -6,17 +6,21 @@ import NewsCard from "src/pages/components/newsCard";
 
 interface Props {
   data: snippetNews[];
-  isFavorited: boolean;
+  updateNewsFavorite: (news: snippetNews[]) => void;
 }
 
-const NewsCardList: FunctionComponent<Props> = ({ data, isFavorited }) => {
+const NewsCardList: FunctionComponent<Props> = ({
+  data,
+  updateNewsFavorite,
+}) => {
   return (
     <div className={styles.datarow}>
       {data.map((news, index) => {
         return (
           <NewsCard
+            key={`${news.story_id}-${index.toString()}`}
             news={news}
-            newsCardId={`${news.story_id}-${index.toString()}`}
+            updateNewsFavorite={updateNewsFavorite}
           />
         );
       })}
