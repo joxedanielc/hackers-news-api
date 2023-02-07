@@ -46,7 +46,7 @@ const NewsCard: FunctionComponent<Props> = ({
           handdleNewsOnClick(news.story_url);
         }}
       >
-        <div className={styles.row}>
+        <div className={styles.datarow}>
           <div className={styles.col12}>
             <span className={styles.postedTime}>
               <img src={"/time.png"} className={styles.time} />

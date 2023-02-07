@@ -1,6 +1,5 @@
 import * as React from "react";
 import Head from "next/head";
-import { Inter } from "@next/font/google";
 import styles from "@/styles/Styles.module.css";
 import SelectLanguages from "src/pages/components/selector";
 import NewsCardList from "@/pages/components/newsCardList";
@@ -17,8 +16,6 @@ import { getStories } from "src/pages/api/news-api";
 import usePagination from "src/pages/components/pagination";
 import { Pagination } from "@mui/material";
 import clsx from "clsx";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [codeLanguage, setCodeLanguage] = useState(getLanguageCodeSelected());
@@ -59,10 +56,18 @@ export default function Home() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+          rel="stylesheet"
+        ></link>
       </Head>
       <main className={styles.main}>
         <div className={styles.header}>
-          <span className="HACKER-NEWS Text-Style">HACKER NEWS</span>
+          <span className={styles.hackerNews}>HACKER NEWS</span>
         </div>
         <div className={styles.paginationContainer}>
           <div className={styles.center}>
