@@ -8,7 +8,7 @@ This project is a small responsive web application to test knowledge of React De
 4. [Code Explanation](https://github.com/joxedanielc/hackers-news-api#code-explanation)
     1. [API](https://github.com/joxedanielc/hackers-news-api#api)
     2. [Utils](https://github.com/joxedanielc/hackers-news-api#utils)
-    3. [Components](https://github.com/joxedanielc/hackers-news-api#components)
+    3. [Behind the Curtains](https://github.com/joxedanielc/hackers-news-api#behind-the-curtains)
 5. [Run Locally](https://github.com/joxedanielc/hackers-news-api#run-locally)  
 6. [Feedback](https://github.com/joxedanielc/hackers-news-api#feedback)
 7. [License](https://github.com/joxedanielc/hackers-news-api#license)
@@ -21,6 +21,13 @@ This project is a small responsive web application to test knowledge of React De
 **Client:** React, Nextjs, Typescript
 
 ## Features  
+
+- Favorite News
+- All/My Favorites toggle view
+- Pagination
+- E2E Tests
+
+## Code Explanation  
 
 ### API
 
@@ -38,16 +45,11 @@ to render the page whenever these changes.
 
 The file `utils.ts` contains the interfaces to create the expected objects with its properties, the enums to avoid misspelling across the app and the functions that handle the set of data.
 
-### Components
+### Behind the Curtains
 
-No Idea What To Put Here
+#### Favorites Locally Storage
 
-## Code Explanation  
-
-- Favorite News
-- All/My Favorites toggle view
-- Pagination
-- E2E Tests
+The reason why a news object is locally storage instead of just the `news-id` is because I wouldn't need to go through the whole array in the response to extract the news base by id, which could have been which could have time consuming and not efficent.
 
 ## Run Locally  
 
@@ -60,7 +62,7 @@ Clone the project
 Go to the project directory  
 
 ~~~bash  
-  cd hackers-news-api
+cd hackers-news-api
 ~~~
 
 Install dependencies  
@@ -75,9 +77,19 @@ Start the server
 npm run dev
 ~~~
 
+To run e2e test (no need to start the server before)
+
+~~~bash  
+npx playwright test
+~~~
+or if you'd like to see the test on the browser:
+~~~bash  
+npx playwright test --debug
+~~~
+
 ## Feedback  
 
-If you have any feedback, please reach out to jcastro3092@gmail.com
+If you have any feedback, please leave a comment.
 
 ## License  
 

@@ -33,7 +33,7 @@ const NewsCard: FunctionComponent<Props> = ({ news, updateNewsFavorite }) => {
   };
 
   return (
-    <div className={styles.informationCard}>
+    <div data-testid="newsCardInformation" className={styles.informationCard}>
       <div
         className={styles.snippet}
         onClick={() => {
