@@ -4,7 +4,7 @@ import { snippetNews, newsValues, PageView } from "src/utils";
 
 export const baseUrl = "https://hn.algolia.com/api/v1/search_by_date?";
 
-export const getStories = (
+export const GetStories = (
   language: string,
   page: number,
   news: {

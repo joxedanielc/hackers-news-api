@@ -10,10 +10,9 @@ import {
   getFavorites,
   VariablesStored,
   PageView,
-  snippetNews,
 } from "src/utils";
-import { getStories } from "src/pages/api/news-api";
-import usePagination from "src/pages/components/pagination";
+import { GetStories } from "src/pages/api/news-api";
+
 import { Pagination } from "@mui/material";
 import clsx from "clsx";
 
@@ -25,14 +24,38 @@ export default function Home() {
   const perPage = 20;
 
   const { response, numberPages, totalRecords, updateNewsFavorite } =
-    getStories(codeLanguage, page, getFavorites(), pageView, perPage);
+    GetStories(codeLanguage, page, getFavorites(), pageView, perPage);
 
   const count = Math.ceil(totalRecords / perPage);
-  const dataPerPagination = usePagination(perPage, numberPages);
+
+  const usePagination = (itemsPerPage: number, totalRecords: number) => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const maxPage = Math.ceil(totalRecords / itemsPerPage);
+
+    function next() {
+      setCurrentPage((currentPage) => Math.min(currentPage + 1, maxPage));
+    }
+
+    function prev() {
+      setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
+    }
+
+    function jump(page: any) {
+      const pageNumber = Math.max(1, page);
+      setCurrentPage(() => Math.min(pageNumber, maxPage));
+    }
+
+    return { next, prev, jump, currentPage, maxPage };
+  };
+
+  const { next, prev, jump, currentPage, maxPage } = usePagination(
+    perPage,
+    numberPages
+  );
 
   const handleChange = (e: any, p: number) => {
     setPage(p - 1);
-    dataPerPagination.jump(p);
+    jump(p);
   };
 
   const handleChangePageView = (e: any, pView: string) => {
