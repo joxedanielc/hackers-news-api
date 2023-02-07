@@ -42,7 +42,7 @@ export const getStories = (
     if (pageView === PageView.all) {
       fetchData();
     } else {
-      if (news !== null) {
+      if (news.newsFavorited !== null) {
         const maxPage = Math.ceil(news.newsFavorited.length / perPage);
         setNumberPages(maxPage);
         setTotalRecords(news.newsFavorited.length);

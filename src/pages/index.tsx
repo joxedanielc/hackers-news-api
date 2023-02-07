@@ -73,6 +73,7 @@ export default function Home() {
                 })}
               >
                 <button
+                  data-testid="allNewsView"
                   onClick={(e) => {
                     handleChangePageView(e, PageView.all);
                   }}
@@ -86,6 +87,7 @@ export default function Home() {
                 })}
               >
                 <button
+                  data-testid="myFavesNewsView"
                   onClick={(e) => {
                     handleChangePageView(e, PageView.myFaves);
                   }}

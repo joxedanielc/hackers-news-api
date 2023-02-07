@@ -29,6 +29,7 @@ const SelectLanguages: FunctionComponent<{
     <div>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <Select
+          data-testid="codeLanguageSelector"
           value={value}
           onChange={(event) => {
             onCodeLanguageChange(event.target.value as string);
@@ -38,6 +39,7 @@ const SelectLanguages: FunctionComponent<{
         >
           {codeLanguageOptions.map((language) => (
             <MenuItem
+              data-testid={language.name.toLowerCase()}
               value={language.name.toLowerCase()}
               key={language.name.toLowerCase()}
             >

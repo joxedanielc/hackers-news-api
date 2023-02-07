@@ -19,6 +19,7 @@ const NewsCardList: FunctionComponent<Props> = ({
         return (
           <NewsCard
             key={`${news.story_id}-${index.toString()}`}
+            index={index}
             news={news}
             updateNewsFavorite={updateNewsFavorite}
           />

@@ -11,9 +11,14 @@ import {
 interface Props {
   news: snippetNews;
   updateNewsFavorite: (news: snippetNews[]) => void;
+  index: number;
 }
 
-const NewsCard: FunctionComponent<Props> = ({ news, updateNewsFavorite }) => {
+const NewsCard: FunctionComponent<Props> = ({
+  news,
+  updateNewsFavorite,
+  index,
+}) => {
   const handleFavoritedNews = (news: snippetNews) => {
     let getNews = getFavorites();
     let newsFavorited =
@@ -32,6 +37,7 @@ const NewsCard: FunctionComponent<Props> = ({ news, updateNewsFavorite }) => {
     window.open(url, "_blank");
   };
 
+  const buttonDataTestId = `favoriteButton${index}`;
   return (
     <div data-testid="newsCardInformation" className={styles.informationCard}>
       <div
@@ -56,6 +62,7 @@ const NewsCard: FunctionComponent<Props> = ({ news, updateNewsFavorite }) => {
 
       <div className={styles.favorited}>
         <button
+          data-testid={buttonDataTestId}
           onClick={() => {
             handleFavoritedNews(news);
           }}
