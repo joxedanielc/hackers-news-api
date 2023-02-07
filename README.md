@@ -1,5 +1,7 @@
+
 # Hackers News API
 This project is a small responsive web application to test knowledge of React Development and related technologies.
+
 
 # Table of contents  
 1. [Screenshots](https://github.com/joxedanielc/hackers-news-api#screenshots)
@@ -12,9 +14,6 @@ This project is a small responsive web application to test knowledge of React De
 5. [Run Locally](https://github.com/joxedanielc/hackers-news-api#run-locally)  
 6. [Feedback](https://github.com/joxedanielc/hackers-news-api#feedback)
 7. [License](https://github.com/joxedanielc/hackers-news-api#license)
-## Screenshots  
-
-![App Screenshot](https://lanecdr.org/wp-content/uploads/2019/08/placeholder.png)
 
 ## Tech Stack  
 
