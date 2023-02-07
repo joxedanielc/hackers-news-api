@@ -50,12 +50,12 @@ const NewsCard: FunctionComponent<Props> = ({
           <div className={styles.col12}>
             <span className={styles.postedTime}>
               <img src={"/time.png"} className={styles.time} />
-              {news.created_at} by
-              {news.author}
+              {news?.created_at} by
+              {news?.author}
             </span>
           </div>
           <div className={styles.col12}>
-            <span className={styles.newsSnippet}>{news.story_title}</span>
+            <span className={styles.newsSnippet}>{news?.story_title}</span>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ const NewsCard: FunctionComponent<Props> = ({
             handleFavoritedNews(news);
           }}
         >
-          {news.favorited ? (
+          {news?.favorited ? (
             <img src={"/favorite.png"} className={styles.favorite} />
           ) : (
             <img src={"/favoriteempty.png"} className={styles.favorite} />

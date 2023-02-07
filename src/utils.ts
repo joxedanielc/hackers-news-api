@@ -1,4 +1,4 @@
-import moment, { now } from "moment";
+import moment from "moment";
 
 export enum VariablesStored {
   newsFavorited = "news_favorited",

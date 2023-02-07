@@ -15,7 +15,7 @@ const NewsCardList: FunctionComponent<Props> = ({
 }) => {
   return (
     <div className={styles.datarow}>
-      {data.map((news, index) => {
+      {data?.map((news, index) => {
         return (
           <NewsCard
             key={`${news.story_id}-${index.toString()}`}
