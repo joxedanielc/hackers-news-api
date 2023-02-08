@@ -93,7 +93,7 @@ export default function Home() {
           <span className={styles.hackerNews}>HACKER NEWS</span>
         </div>
         <div className={styles.paginationContainer}>
-          <div className={styles.center}>
+          <div className={styles.centerTabs}>
             <div className={styles.datarow}>
               <div
                 className={clsx(styles.rectangle, {
