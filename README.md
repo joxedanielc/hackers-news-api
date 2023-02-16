@@ -18,7 +18,7 @@ This project is a small responsive web application to test knowledge of React De
 
 ## Tech Stack  
 
-**Client:** React, Nextjs, Typescript
+**Client:** React, Nextjs, Typescript, React-Boostrap
 
 ## Features  
 
