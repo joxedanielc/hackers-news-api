@@ -73,7 +73,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Hacker News</title>
+        <title>HN Read</title>
         <meta
           name="description"
           content="Get all the latest information from Hacher News API"
@@ -101,7 +101,7 @@ export default function Home() {
                 ></SelectLanguages>
               )}
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 d-flex justify-content-center">
               <SwitchNews
                 label={pageView}
                 onSwitchChange={handleChangePageView}
@@ -116,8 +116,8 @@ export default function Home() {
                 data={response}
                 updateNewsFavorite={updateNewsFavorite}
               ></NewsCardList>
-              <div className={styles.paginationContainer}>
-                <div className={styles.center}>
+              <div className="row mt-2 mb-2 d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                   <Pagination
                     count={count}
                     size="large"
