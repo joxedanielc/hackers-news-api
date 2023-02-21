@@ -6,8 +6,8 @@ export enum VariablesStored {
 }
 
 export enum PageView {
-  all = "all",
-  myFaves = "myFaves",
+  all = "All News",
+  myFaves = "My Faves",
 }
 
 export enum CodeLanguageEnum {

@@ -12,6 +12,8 @@ import {
   PageView,
 } from "src/utils";
 import { GetStories } from "src/pages/api/news-api";
+import Header from "./components/header";
+import SwitchNews from "./components/switch";
 
 import { Pagination } from "@mui/material";
 import clsx from "clsx";
@@ -58,10 +60,9 @@ export default function Home() {
     jump(p);
   };
 
-  const handleChangePageView = (e: any, pView: string) => {
-    const view = pView === PageView.all ? PageView.all : PageView.myFaves;
+  const handleChangePageView = () => {
+    const view = pageView === PageView.all ? PageView.myFaves : PageView.all;
     setPageView(view);
-    e.preventDefault();
   };
 
   const handleCodeLanguageChange = (codeLanguage: string): void => {
@@ -88,70 +89,48 @@ export default function Home() {
           rel="stylesheet"
         ></link>
       </Head>
-      <main className={styles.main}>
-        <div className={styles.header}>
-          <span className={styles.hackerNews}>HACKER NEWS</span>
-        </div>
-        <div className={styles.paginationContainer}>
-          <div className={styles.centerTabs}>
-            <div className={styles.datarow}>
-              <div
-                className={clsx(styles.rectangle, {
-                  [styles.rectangleSelected]: pageView === PageView.all,
-                })}
-              >
-                <button
-                  data-testid="allNewsView"
-                  onClick={(e) => {
-                    handleChangePageView(e, PageView.all);
-                  }}
-                >
-                  <span>All</span>
-                </button>
-              </div>
-              <div
-                className={clsx(styles.rectangle, {
-                  [styles.rectangleSelected]: pageView === PageView.myFaves,
-                })}
-              >
-                <button
-                  data-testid="myFavesNewsView"
-                  onClick={(e) => {
-                    handleChangePageView(e, PageView.myFaves);
-                  }}
-                >
-                  <span>My Faves</span>
-                </button>
-              </div>
+      <main id={"content"} role={"main"}>
+        <Header></Header>
+        <div className="container text-center">
+          <div className="row mt-5 mb-4">
+            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              {pageView === PageView.all && (
+                <SelectLanguages
+                  onCodeLanguageChange={handleCodeLanguageChange}
+                  value={codeLanguage}
+                ></SelectLanguages>
+              )}
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <SwitchNews
+                label={pageView}
+                onSwitchChange={handleChangePageView}
+              ></SwitchNews>
             </div>
           </div>
         </div>
-        {pageView === PageView.all && (
-          <SelectLanguages
-            onCodeLanguageChange={handleCodeLanguageChange}
-            value={codeLanguage}
-          ></SelectLanguages>
-        )}
-        {response.length > 0 && (
-          <div className={styles.maincontainer}>
-            <NewsCardList
-              data={response}
-              updateNewsFavorite={updateNewsFavorite}
-            ></NewsCardList>
-            <div className={styles.paginationContainer}>
-              <div className={styles.center}>
-                <Pagination
-                  count={count}
-                  size="large"
-                  page={page + 1}
-                  variant="outlined"
-                  shape="rounded"
-                  onChange={handleChange}
-                />
+        <div className="container">
+          {response.length > 0 && (
+            <>
+              <NewsCardList
+                data={response}
+                updateNewsFavorite={updateNewsFavorite}
+              ></NewsCardList>
+              <div className={styles.paginationContainer}>
+                <div className={styles.center}>
+                  <Pagination
+                    count={count}
+                    size="large"
+                    page={page + 1}
+                    variant="outlined"
+                    shape="rounded"
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
-          </div>
-        )}
+            </>
+          )}
+        </div>
       </main>
     </>
   );

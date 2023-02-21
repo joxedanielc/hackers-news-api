@@ -14,7 +14,7 @@ const NewsCardList: FunctionComponent<Props> = ({
   updateNewsFavorite,
 }) => {
   return (
-    <div className={styles.datarow}>
+    <div className={"row"}>
       {data?.map((news, index) => {
         return (
           <NewsCard
