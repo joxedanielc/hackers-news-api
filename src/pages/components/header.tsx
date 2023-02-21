@@ -2,15 +2,12 @@ import * as React from "react";
 
 export default function Header() {
   return (
-    <nav
-      className="navbar sticky-top"
-      style={{ backgroundColor: "#e3f2fd", fontSize: "2rem" }}
-    >
+    <nav className="navbar sticky-top" style={{ backgroundColor: "#e3f2fd" }}>
       <div className="container-fluid">
         <a
           className="navbar-brand"
           href="#"
-          style={{ fontFamily: "Roboto !important" }}
+          style={{ fontFamily: "Roboto !important", fontSize: "2rem" }}
         >
           <img
             src="/logo.png"

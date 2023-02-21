@@ -1,6 +1,5 @@
 import * as React from "react";
 import Head from "next/head";
-import styles from "@/styles/Styles.module.css";
 import SelectLanguages from "src/pages/components/selector";
 import NewsCardList from "@/pages/components/newsCardList";
 import { useState } from "react";
@@ -14,9 +13,7 @@ import {
 import { GetStories } from "src/pages/api/news-api";
 import Header from "./components/header";
 import SwitchNews from "./components/switch";
-
 import { Pagination } from "@mui/material";
-import clsx from "clsx";
 
 export default function Home() {
   const [codeLanguage, setCodeLanguage] = useState(getLanguageCodeSelected());
@@ -70,6 +67,11 @@ export default function Home() {
     saveSessionStorage(VariablesStored.codeLanguageSelected, codeLanguage);
   };
 
+  const alertMessage =
+    pageView === PageView.all
+      ? "We can't seem to find any news."
+      : "There is not favorited news yet.";
+
   return (
     <>
       <Head>
@@ -110,7 +112,7 @@ export default function Home() {
           </div>
         </div>
         <div className="container">
-          {response.length > 0 && (
+          {response.length > 0 ? (
             <>
               <NewsCardList
                 data={response}
@@ -129,6 +131,14 @@ export default function Home() {
                 </div>
               </div>
             </>
+          ) : (
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="alert alert-info" role="alert">
+                  {alertMessage}
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </main>
