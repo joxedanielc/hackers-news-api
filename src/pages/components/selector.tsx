@@ -26,40 +26,38 @@ const SelectLanguages: FunctionComponent<{
   ];
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <Select
-          data-testid="codeLanguageSelector"
-          value={value}
-          onChange={(event) => {
-            onCodeLanguageChange(event.target.value as string);
-          }}
-          displayEmpty
-          className={styles.dropdown}
-          sx={{
-            "& .MuiSelect-select ": {
-              display: "flex !important",
-              alignItems: "center !important",
-            },
-          }}
-        >
-          {codeLanguageOptions.map((language) => (
-            <MenuItem
-              data-testid={language.name.toLowerCase()}
-              value={language.name.toLowerCase()}
-              key={language.name.toLowerCase()}
-            >
-              <img
-                style={{ marginRight: "5%" }}
-                src={language.icon}
-                alt={language.name.toLowerCase()}
-              />
-              {language.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl>
+      <Select
+        data-testid="codeLanguageSelector"
+        value={value}
+        onChange={(event) => {
+          onCodeLanguageChange(event.target.value as string);
+        }}
+        displayEmpty
+        className={styles.dropdown}
+        sx={{
+          "& .MuiSelect-select ": {
+            display: "flex !important",
+            alignItems: "center !important",
+          },
+        }}
+      >
+        {codeLanguageOptions.map((language) => (
+          <MenuItem
+            data-testid={language.name.toLowerCase()}
+            value={language.name.toLowerCase()}
+            key={language.name.toLowerCase()}
+          >
+            <img
+              style={{ marginRight: "5%" }}
+              src={language.icon}
+              alt={language.name.toLowerCase()}
+            />
+            {language.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

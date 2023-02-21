@@ -39,40 +39,48 @@ const NewsCard: FunctionComponent<Props> = ({
 
   const buttonDataTestId = `favoriteButton${index}`;
   return (
-    <div data-testid="newsCardInformation" className={styles.informationCard}>
-      <div
-        className={styles.snippet}
-        onClick={() => {
-          handdleNewsOnClick(news.story_url);
-        }}
-      >
-        <div className={styles.datarow}>
-          <div className={styles.col12}>
-            <span className={styles.postedTime}>
-              <img src={"/time.png"} className={styles.time} />
-              {news?.created_at} by
-              {news?.author}
-            </span>
-          </div>
-          <div className={styles.col12}>
-            <span className={styles.newsSnippet}>{news?.story_title}</span>
+    <div className="col-md-6 col-sm-12 col-xs-12 mb-3">
+      <div className={"card"}>
+        <div className="card-header">
+          <div className="row">
+            <div className="col-10">
+              <span className={styles.postedTime}>
+                <img src={"/time.png"} className={styles.time} />
+                {news?.created_at} by
+                {news?.author}
+              </span>
+            </div>
+            <div className="col-2 text-center">
+              <button
+                className={styles.favButton}
+                data-testid={buttonDataTestId}
+                onClick={() => {
+                  handleFavoritedNews(news);
+                }}
+              >
+                {news?.favorited ? (
+                  <img src={"/favorite.png"} className={styles.favorite} />
+                ) : (
+                  <img src={"/favoriteempty.png"} className={styles.favorite} />
+                )}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className={styles.favorited}>
-        <button
-          data-testid={buttonDataTestId}
+        <div
+          data-testid="newsCardInformation"
+          className={"card-body"}
           onClick={() => {
-            handleFavoritedNews(news);
+            handdleNewsOnClick(news.story_url);
           }}
+          role="button"
         >
-          {news?.favorited ? (
-            <img src={"/favorite.png"} className={styles.favorite} />
-          ) : (
-            <img src={"/favoriteempty.png"} className={styles.favorite} />
-          )}
-        </button>
+          <div className="row">
+            <div className="col-12">
+              <p>{news?.story_title}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
