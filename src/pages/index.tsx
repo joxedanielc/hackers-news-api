@@ -14,6 +14,7 @@ import { GetStories } from "src/pages/api/news-api";
 import Header from "./components/header";
 import SwitchNews from "./components/switch";
 import { Pagination } from "@mui/material";
+import usePagination from "./components/pagination";
 
 export default function Home() {
   const [codeLanguage, setCodeLanguage] = useState(getLanguageCodeSelected());
@@ -27,30 +28,7 @@ export default function Home() {
 
   const count = Math.ceil(totalRecords / perPage);
 
-  const usePagination = (itemsPerPage: number, totalRecords: number) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const maxPage = Math.ceil(totalRecords / itemsPerPage);
-
-    function next() {
-      setCurrentPage((currentPage) => Math.min(currentPage + 1, maxPage));
-    }
-
-    function prev() {
-      setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
-    }
-
-    function jump(page: any) {
-      const pageNumber = Math.max(1, page);
-      setCurrentPage(() => Math.min(pageNumber, maxPage));
-    }
-
-    return { next, prev, jump, currentPage, maxPage };
-  };
-
-  const { next, prev, jump, currentPage, maxPage } = usePagination(
-    perPage,
-    numberPages
-  );
+  const { jump } = usePagination(perPage, numberPages);
 
   const handleChange = (e: any, p: number) => {
     setPage(p - 1);
@@ -70,7 +48,7 @@ export default function Home() {
   const alertMessage =
     pageView === PageView.all
       ? "We can't seem to find any news."
-      : "There is not favorited news yet.";
+      : "There are not favorited news yet.";
   return (
     <>
       <Head>
@@ -92,6 +70,25 @@ export default function Home() {
       </Head>
       <main id={"content"} role={"main"}>
         <Header></Header>
+        <div className="container text-left">
+          <div className="row mt-5 mb-3">
+            <div className="col-lg-12">
+              <div className="alert alert-secondary text-right" role="alert">
+                <h4 className="alert-heading"></h4>
+                <p>
+                  The page consumes an API that bring the most recents news, you
+                  can click on the card and be redirected to the new's page. You
+                  can also favorited a news, which will be cached.
+                </p>
+                <hr />
+                <p className="mb-0">
+                  You can always check your favorited news switching between
+                  views.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="container text-center">
           <div className="row mt-5 mb-4">
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
