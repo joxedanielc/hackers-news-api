@@ -64,7 +64,7 @@ export const newsValues = (
     );
   });
 
-  return newsFiltered.map((news) => ({
+  const news = newsFiltered.map((news) => ({
     story_id: news.story_id,
     story_title: news.story_title,
     story_url: news.story_url,
@@ -72,6 +72,10 @@ export const newsValues = (
     created_at: `${getTimeDifference(news.created_at)} hour(s) ago`,
     favorited: setNewsFavorited ? setNewsFavorited.has(news.story_id) : false,
   }));
+
+  return news.filter(
+    (v, i, a) => a.findIndex((v2) => v2.story_id === v.story_id) === i
+  );
 };
 
 const isBrowser = () => typeof window !== "undefined";

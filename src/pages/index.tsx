@@ -22,7 +22,7 @@ export default function Home() {
 
   const perPage = 20;
 
-  const { response, numberPages, totalRecords, updateNewsFavorite } =
+  const { response, numberPages, totalRecords, updateNewsFavorite, isLoading } =
     GetStories(codeLanguage, page, getFavorites(), pageView, perPage);
 
   const count = Math.ceil(totalRecords / perPage);
@@ -71,7 +71,6 @@ export default function Home() {
     pageView === PageView.all
       ? "We can't seem to find any news."
       : "There is not favorited news yet.";
-
   return (
     <>
       <Head>
@@ -133,10 +132,18 @@ export default function Home() {
             </>
           ) : (
             <div className="row">
-              <div className="col-lg-12">
-                <div className="alert alert-info" role="alert">
-                  {alertMessage}
-                </div>
+              <div className="col-lg-12 d-flex justify-content-center">
+                {isLoading ? (
+                  <>
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="alert alert-info" role="alert">
+                    {alertMessage}
+                  </div>
+                )}
               </div>
             </div>
           )}
