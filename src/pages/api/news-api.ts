@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { snippetNews, newsValues, PageView } from "src/utils";
 
 export const baseUrl = "https://hn.algolia.com/api/v1/search_by_date?";
@@ -18,6 +18,7 @@ export const GetStories = (
   const [numberPages, setNumberPages] = useState<number>(0);
   const [totalRecords, setTotalRecords] = useState<number>(0);
   const [error, setError] = useState<AxiosError>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [updatedNewsFavorited, setUpdatedNewsFavorited] =
     useState<snippetNews[]>();
 
@@ -32,13 +33,14 @@ export const GetStories = (
         setResponse(newsValues(response.data.hits, news.newsFavoritedIds));
         setNumberPages(response.data.nbPages);
         setTotalRecords(response.data.nbHits);
+        setIsLoading(false);
       })
       .catch(function (error) {
         setError(error);
       });
   };
 
-  useMemo(() => {
+  useEffect(() => {
     if (pageView === PageView.all) {
       fetchData();
     } else {
@@ -47,10 +49,11 @@ export const GetStories = (
         setNumberPages(maxPage);
         setTotalRecords(news.newsFavorited.length);
         setResponse(news.newsFavorited);
+        setIsLoading(false);
       } else {
         setResponse([]);
       }
     }
   }, [language, page, pageView, updatedNewsFavorited]);
-  return { response, numberPages, totalRecords, updateNewsFavorite };
+  return { response, numberPages, totalRecords, updateNewsFavorite, isLoading };
 };
