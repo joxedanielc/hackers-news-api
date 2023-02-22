@@ -28,7 +28,7 @@ export default function Home() {
 
   const count = Math.ceil(totalRecords / perPage);
 
-  const { jump } = usePagination(perPage, numberPages);
+  const jump = usePagination(perPage, numberPages);
 
   const handleChange = (e: any, p: number) => {
     setPage(p - 1);
@@ -77,8 +77,8 @@ export default function Home() {
                 <h4 className="alert-heading"></h4>
                 <p>
                   The page consumes an API that bring the most recents news, you
-                  can click on the card and be redirected to the new's page. You
-                  can also favorited a news, which will be cached.
+                  can click on the card and be redirected to the new`&apos;`s
+                  page. You can also favorited a news, which will be cached.
                 </p>
                 <hr />
                 <p className="mb-0">

@@ -31,6 +31,14 @@ export interface snippetNews {
   favorited: boolean;
 }
 
+export interface paginationReturn {
+  next: () => void;
+  prev: () => void;
+  jump: (page: number) => void;
+  currentPage: number;
+  maxPage: number;
+}
+
 const verifyProperty = (value: string): boolean => {
   const unwantedValues = new Set([" ", null, "null"]);
 

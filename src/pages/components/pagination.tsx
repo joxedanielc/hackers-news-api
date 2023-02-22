@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { paginationReturn } from "@/utils";
 
 export default function usePagination(
   itemsPerPage: number,
   totalRecords: number
-) {
+): (page: number) => void {
   const [currentPage, setCurrentPage] = useState(1);
   const maxPage = Math.ceil(totalRecords / itemsPerPage);
 
@@ -15,10 +16,10 @@ export default function usePagination(
     setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
   }
 
-  function jump(page: any) {
+  function jump(page: number) {
     const pageNumber = Math.max(1, page);
     setCurrentPage(() => Math.min(pageNumber, maxPage));
   }
 
-  return { next, prev, jump, currentPage, maxPage };
+  return jump;
 }
