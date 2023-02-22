@@ -1,24 +1,28 @@
 # Netflify URL
-[hackers-news](https://main--hacker-news-api-jdcm.netlify.app/)
+[HN-Read](https://hn-read.netlify.app/)
+
+# Functionality
+- The selected filter persists on the local storage
+- The favorited posts persists on the local storage
+- When clicking on the row, a new tab should be open with the link of the post
 
 # Hackers News API
 This project is a small responsive web application to test knowledge of React Development and related technologies.
 
 # Table of contents  
-1. [Screenshots](https://github.com/joxedanielc/hackers-news-api#screenshots)
-2. [Tech Stack](https://github.com/joxedanielc/hackers-news-api#tech-stack)  
-3. [Features](https://github.com/joxedanielc/hackers-news-api#features)
-4. [Code Explanation](https://github.com/joxedanielc/hackers-news-api#code-explanation)
+1. [Tech Stack](https://github.com/joxedanielc/hackers-news-api#tech-stack)  
+2. [Features](https://github.com/joxedanielc/hackers-news-api#features)
+3. [Code Explanation](https://github.com/joxedanielc/hackers-news-api#code-explanation)
     1. [API](https://github.com/joxedanielc/hackers-news-api#api)
     2. [Utils](https://github.com/joxedanielc/hackers-news-api#utils)
     3. [Behind the Curtains](https://github.com/joxedanielc/hackers-news-api#behind-the-curtains)
-5. [Run Locally](https://github.com/joxedanielc/hackers-news-api#run-locally)  
-6. [Feedback](https://github.com/joxedanielc/hackers-news-api#feedback)
-7. [License](https://github.com/joxedanielc/hackers-news-api#license)
+4. [Run Locally](https://github.com/joxedanielc/hackers-news-api#run-locally)  
+5. [Feedback](https://github.com/joxedanielc/hackers-news-api#feedback)
+6. [License](https://github.com/joxedanielc/hackers-news-api#license)
 
 ## Tech Stack  
 
-**Client:** React, Nextjs, Typescript, React-Boostrap
+**Client:** React, Nextjs, Typescript, Boostrap
 
 ## Features  
 
